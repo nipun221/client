@@ -1,16 +1,12 @@
 import { useLogin } from "@refinedev/core";
 import { useEffect, useRef } from "react";
-
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import { ThemedTitleV2 } from "@refinedev/mui";
-
 import { CredentialResponse } from "../interfaces/google";
+import { yariga } from "assets";
 
 // Todo: Update your Google Client ID here
-const GOOGLE_CLIENT_ID =
-  "1041339102270-e1fpe2b6v6u1didfndh7jkjmpcashs4f.apps.googleusercontent.com";
 
 export const Login: React.FC = () => {
   const { mutate: login } = useLogin<CredentialResponse>();
@@ -26,7 +22,7 @@ export const Login: React.FC = () => {
       try {
         window.google.accounts.id.initialize({
           ux_mode: "popup",
-          client_id: GOOGLE_CLIENT_ID,
+          client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
           callback: async (res: CredentialResponse) => {
             if (res.credential) {
               login(res);
@@ -61,26 +57,19 @@ export const Login: React.FC = () => {
         justifyContent="center"
         flexDirection="column"
       >
-        <ThemedTitleV2
-          collapsed={false}
-          wrapperStyles={{
-            fontSize: "22px",
-            justifyContent: "center",
-          }}
-        />
-
-        <GoogleButton />
-
-        <Typography align="center" color={"text.secondary"} fontSize="12px">
-          Powered by
+        
+        <Typography align="center" color={"text.secondary"} fontSize="20px">
           <img
             style={{ padding: "0 5px" }}
-            alt="Google"
-            src="https://refine.ams3.cdn.digitaloceanspaces.com/superplate-auth-icons%2Fgoogle.svg"
+            alt="Yariga Logo"
+            src={yariga}
           />
-          Google
         </Typography>
+
+        <GoogleButton />
+        
       </Box>
     </Container>
   );
 };
+
